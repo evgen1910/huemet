@@ -2,312 +2,114 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <title>Кнопка судьбы — turbo edition</title>
+  <title>Кнопка судьбы — fixed edition</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root{
-      --fg:#e7e9ee; --muted:#9aa3b2; --accent:#8ee159;
-      --bg0:#0f1115; --bg1:#141821; --panel:#141821; --border:#252a34;
-    }
+    :root{--fg:#e7e9ee;--muted:#9aa3b2;--accent:#8ee159;--bg0:#0f1115;--bg1:#141821;--panel:#141821;--border:#252a34;}
     *{box-sizing:border-box}
     html,body{height:100%;margin:0}
-    body{
-      display:grid; place-items:center; color:var(--fg);
-      font-family: ui-sans-serif,-apple-system,Segoe UI,Roboto,Inter,system-ui,Arial,sans-serif;
+    body{display:grid;place-items:center;color:var(--fg);
+      font-family:ui-sans-serif,-apple-system,Segoe UI,Roboto,Inter,system-ui,Arial,sans-serif;
       background: radial-gradient(1200px 600px at 50% 30%, #181b22, var(--bg0));
-      transition: background 600ms ease;
-    }
-    .wrap{width:min(960px,92vw); text-align:center; padding:24px}
-    h1{margin:0 0 18px; color:var(--muted); font-size:clamp(18px,2.8vw,24px); font-weight:600}
-    #screen{
-      min-height:32vh; display:grid; place-items:center; padding:24px;
-      border:1px solid var(--border); background:var(--panel); border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02);
-      transition: background 600ms ease, border-color 600ms ease, transform 300ms ease;
-    }
-    #text{
-      font-size: clamp(26px, 5.2vw, 56px);
-      font-weight: 800; line-height:1.15; letter-spacing:.02em; text-wrap:balance;
-      text-shadow: 0 0 10px rgba(142,225,89,0.25);
-    }
-    .blink{ animation: blink 1.2s linear infinite; }
-    @keyframes blink{ 0%,100%{opacity:1} 50%{opacity:.35} }
-
-    .controls{margin-top:20px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-    button{
-      appearance:none; border:none; border-radius:12px; padding:14px 22px;
-      font-size:18px; font-weight:700; cursor:pointer; color:#0d1117;
-      background:linear-gradient(180deg, var(--accent), #7adb3f);
-      box-shadow:0 8px 18px rgba(142,225,89,.25), inset 0 -2px 0 rgba(0,0,0,.1);
-      transition: transform .04s ease, filter .2s ease, opacity .2s ease;
-    }
+      transition: background 600ms ease;}
+    .wrap{width:min(960px,92vw);text-align:center;padding:24px}
+    h1{margin:0 0 18px;color:var(--muted);font-size:clamp(18px,2.8vw,24px);font-weight:600}
+    #screen{min-height:32vh;display:grid;place-items:center;padding:24px;border:1px solid var(--border);
+      background:var(--panel);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+      transition: background 600ms ease,border-color 600ms ease,transform 300ms ease;}
+    #text{font-size:clamp(26px,5.2vw,56px);font-weight:800;line-height:1.15;letter-spacing:.02em;text-wrap:balance;text-shadow:0 0 10px rgba(142,225,89,0.25);}
+    .blink{animation:blink 1.2s linear infinite;}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+    .controls{margin-top:20px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    button{appearance:none;border:none;border-radius:12px;padding:14px 22px;font-size:18px;font-weight:700;cursor:pointer;
+      color:#0d1117;background:linear-gradient(180deg,var(--accent),#7adb3f);
+      box-shadow:0 8px 18px rgba(142,225,89,.25),inset 0 -2px 0 rgba(0,0,0,.1);
+      transition:transform .04s ease,filter .2s ease,opacity .2s ease;}
     button:hover{filter:brightness(1.03)}
-    button:active{transform: translateY(1px) scale(.99)}
-    button.secondary{ background:#232a36; color:var(--fg); box-shadow: inset 0 0 0 1px #2f3846; }
-    button:disabled{opacity:.6; cursor:not-allowed}
-    footer{margin-top:14px; color:var(--muted); font-size:12px; opacity:.9; user-select:none}
-
-    /* Фоновые состояния */
-    body[data-stage="charge"]{
-      background: radial-gradient(1000px 600px at 50% 30%, #1a2330, #0c0f16);
-    }
-    body[data-stage="ready"]{
-      background: radial-gradient(1000px 600px at 50% 30%, #0f1626, #090b11);
-    }
-    body[data-stage="work"]{
-      background: radial-gradient(1100px 640px at 50% 25%, #162a1a, #0a110b);
-    }
-    body[data-stage="send"]{
-      background: radial-gradient(1100px 640px at 50% 25%, #23152d, #0a0611);
-    }
-    body[data-stage="done"]{
-      background: radial-gradient(1200px 680px at 50% 25%, #1d2438, #0b1021);
-    }
-
-    /* Холст конфетти */
-    #confetti {
-      position: fixed; inset: 0; pointer-events: none; z-index: 10;
-    }
+    button:active{transform:translateY(1px) scale(.99)}
+    button.secondary{background:#232a36;color:var(--fg);box-shadow:inset 0 0 0 1px #2f3846;}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    footer{margin-top:14px;color:var(--muted);font-size:12px;opacity:.9;user-select:none}
+    body[data-stage="charge"]{background:radial-gradient(1000px 600px at 50% 30%,#1a2330,#0c0f16);}
+    body[data-stage="ready"]{background:radial-gradient(1000px 600px at 50% 30%,#0f1626,#090b11);}
+    body[data-stage="work"]{background:radial-gradient(1100px 640px at 50% 25%,#162a1a,#0a110b);}
+    body[data-stage="send"]{background:radial-gradient(1100px 640px at 50% 25%,#23152d,#0a0611);}
+    body[data-stage="done"]{background:radial-gradient(1200px 680px at 50% 25%,#1d2438,#0b1021);}
+    #confetti{position:fixed;inset:0;pointer-events:none;z-index:10;}
   </style>
 </head>
 <body>
   <canvas id="confetti"></canvas>
-
   <div class="wrap">
     <h1>Нажми кнопку — и не говори, что тебя не предупреждали</h1>
-
-    <div id="screen">
-      <div id="text">Нажать кнопку</div>
-    </div>
-
+    <div id="screen"><div id="text">Нажать кнопку</div></div>
     <div class="controls">
-      <button id="startBtn" aria-controls="text">Нажать кнопку</button>
+      <button id="startBtn">Нажать кнопку</button>
       <button id="resetBtn" class="secondary" hidden>Сбросить</button>
-      <!-- Переключатель «какие конфетти» -->
-      <button id="toggleEmoji" class="secondary" title="Переключить тип конфетти">Конфетти: 🍆</button>
-      <button id="muteBtn" class="secondary" title="Включить/выключить звук">Звук: 🔊</button>
     </div>
-
-    <footer>© Дружеская шутка. Конфетти — эмодзи/абстракция, без явных гениталий.</footer>
+    <footer>© Дружеская шутка</footer>
   </div>
-
   <script>
-    /* ---------- DOM ---------- */
-    const textEl   = document.getElementById('text');
-    const startBtn = document.getElementById('startBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const toggleEmojiBtn = document.getElementById('toggleEmoji');
-const muteBtn  = document.getElementById('muteBtn');
-
-    /* ---------- Helpers ---------- */
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-    const rnd   = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-    function showMessage(str, {blink=false, stage=null} = {}) {
-      textEl.textContent = str;
-      textEl.classList.toggle('blink', blink);
-      if (stage) document.body.setAttribute('data-stage', stage);
+    const textEl=document.getElementById('text');
+    const startBtn=document.getElementById('startBtn');
+    const resetBtn=document.getElementById('resetBtn');
+    const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+    const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+    function showMessage(str,{blink=false,stage=null}={}){
+      textEl.textContent=str;textEl.classList.toggle('blink',blink);
+      if(stage)document.body.setAttribute('data-stage',stage);
     }
-
-    /* ---------- АУДИО: «ВУУХ» ---------- */
-    let audioCtx = null, soundMuted = false;
-    function ensureAudio() {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    function playWhoosh(duration=0.5){
-      if (soundMuted) return;
-      ensureAudio();
-
-      // White noise buffer
-      const sampleRate = audioCtx.sampleRate;
-      const length = Math.floor(sampleRate * duration);
-      const buffer = audioCtx.createBuffer(1, length, sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i=0;i<length;i++) data[i] = (Math.random()*2-1);
-
-      const src = audioCtx.createBufferSource(); src.buffer = buffer;
-
-      // Фильтры + огибающая
-      const hp = audioCtx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 400;
-      const lp = audioCtx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 8000;
-
-      const gain = audioCtx.createGain(); gain.gain.value = 0.0001;
-
-      // простая огибающая
-      const now = audioCtx.currentTime;
-      gain.gain.cancelScheduledValues(now);
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.4, now + 0.08);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-      // sweep
-      hp.frequency.setValueAtTime(400, now);
-      hp.frequency.exponentialRampToValueAtTime(1200, now + duration);
-
-      src.connect(hp).connect(lp).connect(gain).connect(audioCtx.destination);
-      src.start();
-      src.stop(now + duration + 0.02);
-    }
-
-    muteBtn.addEventListener('click', ()=>{
-      soundMuted = !soundMuted;
-      muteBtn.textContent = 'Звук: ' + (soundMuted ? '🔇' : '🔊');
-      if (!soundMuted) ensureAudio();
-    });
-
-    /* ---------- КОНФЕТТИ ---------- */
-    const canvas = document.getElementById('confetti');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let emojiMode = true; // true -> эмодзи; false -> бумажки
-    const emojiSets = [
-      ['🍆','🌭','🚀','🎉','🌶️'],
-      ['💥','✨','🧨','💫','🧃'] // запасной набор
-    ];
-    let activeEmojiSet = 0;
-
-    function resize(){
-      canvas.width = innerWidth * devicePixelRatio;
-      canvas.height = innerHeight * devicePixelRatio;
-      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-    }
-    addEventListener('resize', resize); resize();
-
-    class Particle {
-      constructor(x, y, vX, vY, rot, rotV, size, color, char=null){
-        this.x=x; this.y=y; this.vX=vX; this.vY=vY;
-        this.rot=rot; this.rotV=rotV; this.size=size; this.color=color;
-        this.char=char; this.life=0; this.maxLife=rnd(60,120);
-      }
-      step(){
-        this.life++;
-        // простая физика
-        this.vY += 0.25; // gravity
-        this.vX *= 0.995; this.vY *= 0.995; // air
-        this.x += this.vX; this.y += this.vY;
-        this.rot += this.rotV;
-      }
-      draw(){
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rot);
-        if (this.char){
-          ctx.font = ${this.size}px system-ui, Apple Color Emoji, Segoe UI Emoji;
-          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-          ctx.globalAlpha = 0.9;
-          ctx.fillText(this.char, 0, 0);
-        } else {
-          ctx.globalAlpha = 0.9;
-          ctx.fillStyle = this.color;
-          // бумажка
-          ctx.beginPath();
-          ctx.roundRect(-this.size*0.6, -this.size*0.4, this.size*1.2, this.size*0.8, this.size*0.15);
-          ctx.fill();
-        }
-        ctx.restore();
-      }
-      isDead(){ return this.life > this.maxLife || this.y > innerHeight + 80; }
-    }
-function burstConfetti({count=80, x=innerWidth/2, y=innerHeight*0.3, spread=Math.PI, power=10}={}){
-      const palette = ['#8ee159','#54b4ff','#ff6ea9','#ffd166','#c58fff','#7cf0a5','#f6b26b'];
-      for (let i=0;i<count;i++){
-        const angle = (-Math.PI/2) + (Math.random()-0.5)*spread;
-        const speed = power + Math.random()*power;
-        const vX = Math.cos(angle)*speed;
-        const vY = Math.sin(angle)*speed;
-        const rot = Math.random()*Math.PI*2;
-        const rotV = (Math.random()-.5)*0.2;
-        const size = rnd(14, 28);
-
-        if (emojiMode){
-          const set = emojiSets[activeEmojiSet];
-          const char = set[rnd(0, set.length-1)];
-          particles.push(new Particle(x,y,vX,vY,rot,rotV,size,'',char));
-        } else {
-          const color = palette[rnd(0, palette.length-1)];
-          particles.push(new Particle(x,y,vX,vY,rot,rotV,size,color,null));
-        }
-      }
-    }
-
-    function loop(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach(p=>{ p.step(); p.draw(); });
-      particles = particles.filter(p=>!p.isDead());
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    toggleEmojiBtn.addEventListener('click', ()=>{
-      if (emojiMode){
-        // переключаем на бумажки
-        emojiMode = false; toggleEmojiBtn.textContent = 'Конфетти: 🎊';
-      } else {
-        emojiMode = true;
-        // меняем набор эмодзи по кругу (🍆/🌭/🚀/🎉/🌶️ …)
-        activeEmojiSet = (activeEmojiSet + 1) % emojiSets.length;
-        const preview = emojiSets[activeEmojiSet][0];
-        toggleEmojiBtn.textContent = Конфетти: ${preview};
-      }
-    });
-
-    /* ---------- МИЛЕСТОУНЫ ---------- */
-    function generateMilestones(){
-      const steps = rnd(3,5);
-      let n = rnd(5,18);
-      const incMin = 5, incMax = 40;
-      const arr=[];
-      for (let i=0;i<steps;i++){ n += rnd(incMin,incMax); arr.push(n); }
-      return arr;
-    }
-
-    /* ---------- MAIN FLOW ---------- */
-    async function run(){
-      startBtn.disabled = true; resetBtn.hidden = true;
-
-      const show = async (str, opts={})=>{
-        showMessage(str, opts);
-        await sleep(rnd(8000, 10000));
-      };
-
-      // Стадии
-      await show('ХУЕМЕТ ЗАРЯЖАЕТСЯ …', {blink:true, stage:'charge'});
-      await show('ХУЕМЕТ ЗАРЯЖЕН…', {stage:'ready'});
-      await show('ХУЕМЕТАТЕЛЬ ГОТОВ…', {stage:'ready'});
-      await show('ХУЕМЕТ НАЧИНАЕТ РАБОТАТЬ…', {stage:'work'});
-
-      // Числовые статусы
-      const milestones = generateMilestones();
-      for (const n of milestones){
-        showMessage(`${n} ХУЕВ ОТПРАВЛЕНО АДРЕСАТУ …`, {stage:'send'});
-        playWhoosh(.42);
-        burstConfetti({count: 60, y: innerHeight*0.28, power: 9, spread: Math.PI*0.9});
-        await sleep(rnd(8000, 10000));
-      }
-
-      // Финал
-      showMessage('ХУИ ДОСТАВЛЕНЫ АДРЕСАТУ', {stage:'done'});
-      playWhoosh(.7);
-      // Большой салют
-      burstConfetti({count: 180, y: innerHeight*0.3, power: 12, spread: Math.PI*1.2});
-      await sleep(1000);
-
-      resetBtn.hidden = false; startBtn.disabled = false;
-      textEl.classList.remove('blink');
-    }
-
-    function reset(){
-      showMessage('Нажать кнопку');
-      document.body.removeAttribute('data-stage');
-      particles = [];
-      resetBtn.hidden = true;
-    }
-
-    startBtn.addEventListener('click', run);
-    resetBtn.addEventListener('click', reset);
-
-    // iOS разрешение аудио по первому тапу
-    window.addEventListener('pointerdown', ()=>{ try{ ensureAudio(); }catch(e){} }, {once:true});
+    let audioCtx=null,soundMuted=false;
+    function ensureAudio(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();}
+    function playWhoosh(d=0.5){try{
+      if(soundMuted)return;ensureAudio();
+      const sr=audioCtx.sampleRate;const len=Math.floor(sr*d);
+      const buf=audioCtx.createBuffer(1,len,sr);const data=buf.getChannelData(0);
+      for(let i=0;i<len;i++)data[i]=Math.random()*2-1;
+      const src=audioCtx.createBufferSource();src.buffer=buf;
+      const hp=audioCtx.createBiquadFilter();hp.type='highpass';hp.frequency.value=400;
+      const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=8000;
+      const g=audioCtx.createGain();g.gain.value=0.0001;const now=audioCtx.currentTime;
+      g.gain.setValueAtTime(0.0001,now);g.gain.exponentialRampToValueAtTime(0.4,now+0.08);
+      g.gain.exponentialRampToValueAtTime(0.001,now+d);
+      hp.frequency.setValueAtTime(400,now);hp.frequency.exponentialRampToValueAtTime(1200,now+d);
+      src.connect(hp).connect(lp).connect(g).connect(audioCtx.destination);
+      src.start();src.stop(now+d+0.02);}catch(e){}}
+    const canvas=document.getElementById('confetti');const ctx=canvas.getContext('2d');let particles=[];
+    function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}addEventListener('resize',resize);resize();
+    class Particle{constructor(x,y,vx,vy,rot,rv,size,color,char=null){this.x=x;this.y=y;this.vx=vx;this.vy=vy;this.rot=rot;this.rv=rv;this.size=size;this.color=color;this.char=char;this.life=0;this.maxLife=rnd(60,120);}
+      step(){this.life++;this.vy+=0.25;this.vx*=0.995;this.vy*=0.995;this.x+=this.vx;this.y+=this.vy;this.rot+=this.rv;}
+      draw(){ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.rot);ctx.globalAlpha=0.9;
+        if(this.char){ctx.font=`${this.size}px system-ui,Apple Color Emoji,Segoe UI Emoji`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(this.char,0,0);}
+        else{ctx.fillStyle=this.color;const w=this.size*1.2,h=this.size*0.8,r=this.size*0.15;const x=-w/2,y=-h/2;
+          if(typeof ctx.roundRect==='function'){ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();}
+          else{ctx.beginPath();const rr=Math.min(r,w/2,h/2);
+            ctx.moveTo(x+rr,y);ctx.lineTo(x+w-rr,y);ctx.quadraticCurveTo(x+w,y,x+w,y+rr);
+            ctx.lineTo(x+w,y+h-rr);ctx.quadraticCurveTo(x+w,y+h,x+w-rr,y+h);
+            ctx.lineTo(x+rr,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-rr);
+            ctx.lineTo(x,y+rr);ctx.quadraticCurveTo(x,y,x+rr,y);ctx.closePath();ctx.fill();}}ctx.restore();}
+      isDead(){return this.life>this.maxLife||this.y>innerHeight+80;}}
+    function burstConfetti({count=80,x=innerWidth/2,y=innerHeight*0.3,spread=Math.PI,power=10}={}){
+      const palette=['#8ee159','#54b4ff','#ff6ea9','#ffd166','#c58fff','#7cf0a5','#f6b26b'];
+      for(let i=0;i<count;i++){const ang=(-Math.PI/2)+(Math.random()-0.5)*spread;const sp=power+Math.random()*power;
+        const vx=Math.cos(ang)*sp;const vy=Math.sin(ang)*sp;const rot=Math.random()*Math.PI*2;const rv=(Math.random()-.5)*0.2;const size=rnd(14,28);
+        const color=palette[rnd(0,palette.length-1)];particles.push(new Particle(x,y,vx,vy,rot,rv,size,color,null));}}
+    function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.step();p.draw();});particles=particles.filter(p=>!p.isDead());requestAnimationFrame(loop);}loop();
+    function generateMilestones(){const steps=rnd(3,5);let n=rnd(5,18);const arr=[];for(let i=0;i<steps;i++){n+=rnd(5,40);arr.push(n);}return arr;}
+    async function run(){startBtn.disabled=true;resetBtn.hidden=true;
+      const show=async(str,opts={})=>{showMessage(str,opts);await sleep(rnd(8000,10000));};
+      await show('ХУЕМЕТ ЗАРЯЖАЕТСЯ …',{blink:true,stage:'charge'});
+      await show('ХУЕМЕТ ЗАРЯЖЕН…',{stage:'ready'});
+      await show('ХУЕМЕТАТЕЛЬ ГОТОВ…',{stage:'ready'});
+      await show('ХУЕМЕТ НАЧИНАЕТ РАБОТАТЬ…',{stage:'work'});
+      const ms=generateMilestones();for(const n of ms){showMessage(`${n} ХУЕВ ОТПРАВЛЕНО АДРЕСАТУ …`,{stage:'send'});
+        playWhoosh(.42);burstConfetti({count:60,y:innerHeight*0.28,power:9,spread:Math.PI*0.9});await sleep(rnd(8000,10000));}
+      showMessage('ХУИ ДОСТАВЛЕНЫ АДРЕСАТУ',{stage:'done'});playWhoosh(.7);burstConfetti({count:180,y:innerHeight*0.3,power:12,spread:Math.PI*1.2});
+      await sleep(1000);resetBtn.hidden=false;startBtn.disabled=false;textEl.classList.remove('blink');}
+    function reset(){showMessage('Нажать кнопку');document.body.removeAttribute('data-stage');particles=[];resetBtn.hidden=true;}
+    startBtn.addEventListener('click',run);resetBtn.addEventListener('click',reset);
+    window.addEventListener('pointerdown',()=>{try{ensureAudio();}catch(e){}},{once:true});
   </script>
 </body>
 </html>
