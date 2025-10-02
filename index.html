@@ -98,14 +98,14 @@
     function loop(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.step();p.draw();});particles=particles.filter(p=>!p.isDead());requestAnimationFrame(loop);}loop();
     function generateMilestones(){const steps=rnd(3,5);let n=rnd(5,18);const arr=[];for(let i=0;i<steps;i++){n+=rnd(5,40);arr.push(n);}return arr;}
     async function run(){startBtn.disabled=true;resetBtn.hidden=true;
-      const show=async(str,opts={})=>{showMessage(str,opts);await sleep(rnd(8000,10000));};
+      const show=async(str,opts={})=>{showMessage(str,opts);await sleep(3000);};
       await show('ХУЕМЕТ ЗАРЯЖАЕТСЯ …',{blink:true,stage:'charge'});
       await show('ХУЕМЕТ ЗАРЯЖЕН…',{stage:'ready'});
       await show('ХУЕМЕТАТЕЛЬ ГОТОВ…',{stage:'ready'});
       await show('ХУЕМЕТ НАЧИНАЕТ РАБОТАТЬ…',{stage:'work'});
       const ms=generateMilestones();for(const n of ms){showMessage(`${n} ХУЕВ ОТПРАВЛЕНО АДРЕСАТУ …`,{stage:'send'});
-        playWhoosh(.42);burstConfetti({count:60,y:innerHeight*0.28,power:9,spread:Math.PI*0.9});await sleep(rnd(8000,10000));}
-      showMessage('ХУИ ДОСТАВЛЕНЫ АДРЕСАТУ',{stage:'done'});playWhoosh(.7);burstConfetti({count:180,y:innerHeight*0.3,power:12,spread:Math.PI*1.2});
+        playWhoosh(.42);burstConfetti({count:60,y:innerHeight*0.28,power:9,spread:Math.PI*0.9});await sleep(3000);}
+      showMessage('ХУИ ДОСТАВЛЕНЫ АДРЕСАТУ, ТОВАРИЩ ГЛАВНЫЙ ХУЕМЕТАТЕЛЬ',{stage:'done'});playWhoosh(.7);burstConfetti({count:180,y:innerHeight*0.3,power:12,spread:Math.PI*1.2});
       await sleep(1000);resetBtn.hidden=false;startBtn.disabled=false;textEl.classList.remove('blink');}
     function reset(){showMessage('Нажать кнопку');document.body.removeAttribute('data-stage');particles=[];resetBtn.hidden=true;}
     startBtn.addEventListener('click',run);resetBtn.addEventListener('click',reset);
